@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Poppins|Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>My Note</title>
+    <link rel="shortcut icon" href="./img/16x16.png">
+    <link rel="stylesheet" href="./materialize.min.css">
+    <script src="./materialize.min.js"></script>
+    <style>
+        .loader>button{
+            display:none;
+        }
+        .loader {
+            margin: 15.5px;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input[type=email],input[type=password],input[type=text],textarea{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .authSubmit{
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+  
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+  
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .closebtn{
+            cursor: pointer;
+        }
+  
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+    </style>
+</head>
+<body style="height:250px">
+    <div id="mySidenav" class="sidenav">
+        <div>
+            <svg id="closeButton" class="closebtn" width="40" height="55" viewBox="0 0 215 186" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="closebtn" opacity="0.54" fill-rule="evenodd" clip-rule="evenodd" d="M169.584 49.7562L157.109 38.946L107.208 82.1867L57.3068 38.946L44.8315 49.7562L94.7326 92.9969L44.8315 136.238L57.3068 147.048L107.208 103.807L157.109 147.048L169.584 136.238L119.683 92.9969L169.584 49.7562Z" fill="white"/>
+            </svg>    
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <div id="homeButton" style="color: white;text-align: center;cursor:pointer;padding: 5px;">Home</div>
+            <div id="signupButton" style="color: white;text-align: center;cursor:pointer;padding: 5px;">Sign Up</div>
+            <div id="loginButton" style="color: white;text-align: center;cursor:pointer;padding: 5px;">Login</div>
+            <div id="logoutButton" style="color: white;text-align: center;cursor:pointer;padding: 5px;">Logout</div>
+        </div>
+    </div>
+    <div id="Navbar">
+        <div style="display:flex;align-content: center;">
+            <div style="width:100%;min-width:300px;display: flex;justify-content: center;align-content: center;">
+                <div style="padding-right:8px;display: flex;align-content:center;vertical-align: center;">
+                    <div style="font-family: 'Poppins', sans-serif;font-weight:600;font-size:medium;letter-spacing: 0.9px;">Notes</div>
+                </div>               
+            </div>
+            <div style="display: flex;align-content: center;padding-right: 5px;">
+                <svg style="cursor:pointer;" width="13" id="moreButton" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.54" fill-rule="evenodd" clip-rule="evenodd" d="M6.40015 8C7.50015 8 8.40015 7.1 8.40015 6C8.40015 4.9 7.50015 4 6.40015 4C5.30015 4 4.40015 4.9 4.40015 6C4.40015 7.1 5.30015 8 6.40015 8ZM6.40015 10C5.30015 10 4.40015 10.9 4.40015 12C4.40015 13.1 5.30015 14 6.40015 14C7.50015 14 8.40015 13.1 8.40015 12C8.40015 10.9 7.50015 10 6.40015 10ZM6.40015 16C5.30015 16 4.40015 16.9 4.40015 18C4.40015 19.1 5.30015 20 6.40015 20C7.50015 20 8.40015 19.1 8.40015 18C8.40015 16.9 7.50015 16 6.40015 16Z" fill="black"/>
+                </svg> 
+            </div>
+        </div>
+    </div>
+    <div id="actionPage" style="height:100%">
+        <div style="height:100%;overflow-y: scroll;margin-top:10px;margin-bottom:10px;display:flex;justify-content: center;">
+            <div class="card" style="height:80px;box-shadow:none;border-radius:10px;border:0.6px solid #8c8c8c;width:95%;">
+                <div class="card-content" style="padding-top: 5px;padding-left:15px;padding-right:10px;padding-bottom: 5px;">
+                  <span class="card-title activator" style="font-size:18px;margin-bottom: 0px;">Title<i class="material-icons right">more_vert</i></span>
+                  <div style="display: flex;justify-content: space-between;padding-top:3px;">
+                    <p style="margin: 0px;">some text</p>
+                    <span><i class="material-icons" data-id="${id}">delete_outline</i></span>
+                  </div>
+                </div>
+                <div class="card-reveal" style="padding:10px;">
+                  <span class="card-title" style="font-size:18px;margin-bottom: 0px;">Description<i class="material-icons right">close</i></span>
+                  <p style="margin:0px;">Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;justify-content: flex-end;margin-bottom: 10px;">
+            <div id="addButton" style="display: block;">
+                <div style="display:flex;">
+                    <div style="cursor:pointer;font-family: 'Poppins', sans-serif;font-weight:600;font-size:medium;letter-spacing: 0.9px;align-content: center;padding-right: 5px;">Add</div>
+                    <div style="display: flex;padding-right: 10px;">
+                        <img style="cursor: pointer;" src="./img//plus.svg" width="18">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="signupPage" style="height:100%;">
+        <div style="height:100%;display: flex;justify-content: center;align-items: center;">
+            <div style="text-align: center;">
+                <div style="font-weight:800;font-family:'Roboto',sans-serif;letter-spacing: 0.6px;">Sign Up</div>
+                <form>
+                    <div style="text-align: start;">
+                        <label for="signupUserEmail" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Email</label>
+                        <input 
+                            type="email"
+                            id="signupUserEmail"
+                            name="emailaddress"
+                            placeholder="Enter your email"
+                            required
+                        />
+                    </div>
+                    <div style="text-align: start;">
+                        <label for="signupUserPassword" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Password</label>
+                        <input
+                            type="password"
+                            id="signupUserPassword"
+                            name="password"
+                            placeholder="Enter the password"
+                            required
+                        />
+                    </div>
+                    <div style="display:flex;justify-content: center;">
+                        <div id="signupSubmitButtonWrapper">
+                            <button type="submit" class="authSubmit" id="signupSubmitButton">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>   
+    </div>
+    <div id="loginPage" style="height:100%;">
+        <div style="height:100%;display: flex;justify-content: center;align-items: center;">
+            <div style="text-align: center;">
+                <div style="font-weight:800;font-family:'Roboto',sans-serif;letter-spacing: 0.6px;">
+                    Login
+                </div>
+                <form>
+                    <div style="text-align: start;">
+                        <label for="loginUserEmail" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Email</label>
+                        <input 
+                            type="email"
+                            id="loginUserEmail"
+                            name="emailaddress"
+                            placeholder="Enter your email"
+                            required
+                        />
+                    </div>
+                    <div style="text-align: start;">
+                        <label for="loginUserPassword" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Password</label>
+                        <input
+                            type="password"
+                            id="loginUserPassword"
+                            name="password"
+                            placeholder="Enter the password"
+                            required
+                        />
+                    </div>
+                    <div style="display:flex;justify-content: center;">
+                        <div id="loginSubmitButtonWrapper">
+                            <button type="submit" class="authSubmit" id="loginSubmitButton">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+    <div id="notesPage" style="height: 100%;">
+        <div style="height:100%;display: flex;justify-content: center;align-items: center;">
+            <div style="text-align: center;">
+                <form id="notesForm">
+                    <div style="text-align: start;">
+                        <label for="noteTitle" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Title</label>
+                        <input
+                            required 
+                            type="text"
+                            id="noteTitle"
+                            name="title"
+                            placeholder="Enter the Title" 
+                        />
+                    </div>
+                    <div style="text-align: start;">
+                        <label for="noteDescription" style="font-family:'Roboto',sans-serif;font-weight:500;letter-spacing: 0.3px;">Description</label>
+                        <textarea placeholder="Your Description" id="noteDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div style="display:flex;justify-content: center;">
+                        <div id="notesSubmitButtonWrapper">
+                            <button type="submit" class="authSubmit" id="notesSubmitButton">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.0/firebase-firestore.js"></script>
+    <script src="mynote.js"></script>
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+</body>
+</html>
